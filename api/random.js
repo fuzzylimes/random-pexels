@@ -4,12 +4,10 @@ const API_KEY = process.env.API_KEY;
 
 module.exports = (req, res) => {
     const {count = 1} = req.query;
-    console.log(count);
     if (count > 80) {
         res.status(400).send("Invalid query parameter; max count value of 80.")
     }
     const randomPage = Math.floor(Math.random() * (8000 / count));
-    console.log(randomPage);
     const randomReq = https.request({
         hostname: HOST,
         port: 443,
@@ -25,9 +23,7 @@ module.exports = (req, res) => {
             data += d;
         })
         resp.on('end', () => {
-            console.log(data);
             let payload = JSON.parse(data).photos;
-            console.log(payload);
             payload = payload.map(p => {
                 return {
                     id: p.id,
